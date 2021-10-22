@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './App.module.scss';
-import { Code } from './Code';
-import { Controlboard } from './Controlboard';
+import { ContainerGroup } from './ContainerGroup';
 import { Sidebar } from './Sidebar';
 import { SyncStateContext } from './SyncState';
 
@@ -11,24 +10,27 @@ function App() {
 
   const [selectedContainerId, setSelectedContainerId] = useState(null)
 
-  const selectedContainer = selectedContainerId && syncState.containers && syncState.containers.find((c) => c.Id === selectedContainerId)
+  const selectedContainer = selectedContainerId && syncState.all[selectedContainerId]
+  if (!selectedContainer && selectedContainerId)
+    setSelectedContainerId(null)
 
   return (
     <div className={styles.background} onClick={() => setSelectedContainerId(null)}>
-      <div className={styles.listContainer}>
-        {syncState.containers && syncState.containers.map(c => {
-          return (
-            <div key={c.Id} className={styles.dockerContainer} onClick={(e) => { e.stopPropagation(); setSelectedContainerId(c.Id) }}>
-              <h3>{c.Names[0]}</h3>
-              <div>
-                <span>{c.Image}</span>
-                <span>{c.Status}</span>
-              </div>
-            </div>)
-        })}
+      <div className={styles.listWrapper}>
+        {
+          Object.keys(syncState.composed).map((project) => {
+            return (
+              <ContainerGroup containers={syncState.composed[project]} setSelectedContainerId={setSelectedContainerId} project={project} key={project} />
+            )
+          })
+        }
+        {
+          syncState.other.length > 0 &&
+          <ContainerGroup containers={syncState.other} setSelectedContainerId={setSelectedContainerId} project="Non-composed containers" />
+        }
       </div>
       {selectedContainer && (
-        <Sidebar selectedContainer={selectedContainer} onClose={()=>setSelectedContainerId(null)} />
+        <Sidebar selectedContainer={selectedContainer} onClose={() => setSelectedContainerId(null)} />
       )}
     </div>
   );

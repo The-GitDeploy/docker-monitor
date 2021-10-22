@@ -8,25 +8,6 @@
     resize: vertical;
     padding: 10px;
     overflow-y: auto;
-    &::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: #c1f1f03a;
-        border-radius: 5px;
-        
-    }
-    &::-webkit-scrollbar-thumb:hover {
-        border-radius: 5px;
-        background: #c1f1f0;
-    }
-    &::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    &::-webkit-resizer {
-        background-color: #4697ec;
-    }
 }
 .oneLine {
     resize: none;

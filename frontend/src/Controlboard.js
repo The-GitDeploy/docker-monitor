@@ -48,8 +48,8 @@ export const Controlboard = ({ containerId }) => {
     <div className={styles.controlboard}>
       {buttons.map((button, index) => {
         return (button.processing ?
-          <Button icon={button.icon} label={button.labelProcessing} /> :
-          <Button icon={button.icon} label={button.labelIdle} onClick={() => actionHandler(button.action, index)} />
+          <Button key={index} icon={button.icon} label={button.labelProcessing} /> :
+          <Button key={index} icon={button.icon} label={button.labelIdle} onClick={() => actionHandler(button.action, index)} />
         )
       })}
     </div>

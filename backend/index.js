@@ -2,13 +2,28 @@ const Dockerode = require('dockerode');
 var express = require('express');
 const { SyncedServer } = require('express-sync-state');
 
-const state = { containers: [] }
+var state = { composed: {}, other: [], all: {} }
 const docker = new Dockerode();
 setInterval(() => {
   docker.listContainers((err, list) => {
     if (err)
       console.log(err)
-    state.containers = list
+    let newComposed = {}
+    let newOther = []
+    let newAll = {}
+    for (const container of list) {
+      let compose = container.Labels["com.docker.compose.project"];
+      if (compose) {
+        if (!newComposed[compose])
+          newComposed[compose] = []
+        newComposed[compose].push(container)
+      } else
+        newOther.push(container)
+      newAll[container.Id] = container
+    }
+    state.composed = newComposed
+    state.other = newOther
+    state.all = newAll
   })
 }, 2000)
 
@@ -51,17 +66,17 @@ app.get("/log/:container", (req, res) => {
 app.get("/stop/:container", (req, res) => {
   docker.getContainer(req.params.container).stop({ t: 10 }, (err, data) => {
     if (err)
-      res.status(500).send({message: "Error, while stopping container.\n"+data.toString(), error: true})
+      res.status(500).send({ message: "Error, while stopping container.\n" + data.toString(), error: true })
     else
-      res.status(200).send({message: "Successfully stopped container.\n"+data.toString(), error: false})
+      res.status(200).send({ message: "Successfully stopped container.\n" + data.toString(), error: false })
   })
 })
 app.get("/restart/:container", (req, res) => {
   docker.getContainer(req.params.container).restart({ t: 10 }, (err, data) => {
     if (err)
-      res.status(500).send({message: "Error, while restarting container.\n"+data.toString(), error: true})
+      res.status(500).send({ message: "Error, while restarting container.\n" + data.toString(), error: true })
     else
-      res.status(200).send({message: "Successfully restarted container.\n"+data.toString(), error: false})
+      res.status(200).send({ message: "Successfully restarted container.\n" + data.toString(), error: false })
   })
 })
 

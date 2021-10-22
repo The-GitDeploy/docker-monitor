@@ -5,7 +5,7 @@ export const SyncStateContext = React.createContext({ containers: [] })
 
 export function SyncStateProvider(props) {
 
-  const [syncState, setSyncState] = useState({})
+  const [syncState, setSyncState] = useState({composed: {}, other: [], all:{}})
 
   useEffect(() => {
     SyncedClient((process.env.NODE_ENV === "development" ? process.env.REACT_APP_BACKEND : "")+"/state", (state) => {

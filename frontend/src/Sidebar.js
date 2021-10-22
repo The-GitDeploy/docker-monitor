@@ -6,21 +6,22 @@ import styles from "./Sidebar.module.scss"
 export const Sidebar = ({ selectedContainer, onClose }) => {
   const [log, setLog] = useState("")
   useEffect(() => {
-      let xhr = new XMLHttpRequest()
-      let cancelled = false
-      xhr.open("GET", (process.env.NODE_ENV === "development" ? process.env.REACT_APP_BACKEND : "") + "/log/" + selectedContainer.Id)
+    let xhr = new XMLHttpRequest()
+    let cancelled = false
+    xhr.open("GET", (process.env.NODE_ENV === "development" ? process.env.REACT_APP_BACKEND : "") + "/log/" + selectedContainer.Id)
 
-      xhr.onprogress = event => {
-        if (!cancelled)
-          setLog(xhr.responseText.replaceAll(/\u0001|\u0002|\u0010|\u0012|\u0013|\u0014|\u0015|\u0016|\u001b/g, ''))
-      };
+    xhr.onprogress = event => {
+      if (!cancelled)
+        // eslint-disable-next-line
+        setLog(xhr.responseText.replaceAll(/\u0001|\u0002|\u0010|\u0012|\u0013|\u0014|\u0015|\u0016|\u001b/g, ''))
+    };
 
-      xhr.send()
-      return () => {
-        cancelled = true;
-        xhr.abort()
-        setLog("")
-      }
+    xhr.send()
+    return () => {
+      cancelled = true;
+      xhr.abort()
+      setLog("")
+    }
   }, [selectedContainer])
 
   const [showDetails, setShowDetails] = useState(false)
@@ -40,7 +41,7 @@ export const Sidebar = ({ selectedContainer, onClose }) => {
       <Code value={selectedContainer.Id} oneLine />
       <label>Command:</label>
       <Code value={selectedContainer.Command} oneLine />
-      <div><label for="details">Show details:</label><input type="checkbox" id="details" onChange={(e) => setShowDetails(e.target.checked)} /></div>
+      <div><label htmlFor="details">Show details:</label><input type="checkbox" id="details" onChange={(e) => setShowDetails(e.target.checked)} /></div>
       {showDetails && <Code value={JSON.stringify(selectedContainer, null, 2)} />}
       <h1>Log:</h1>
       <Code value={log} scrollToBottom />
