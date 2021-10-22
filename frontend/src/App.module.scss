@@ -10,33 +10,37 @@
 }
 
 .listContainer {
-    flex-grow: 1;
+    min-width: 0;
+    flex: 1 1 0;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: 20px;
-    padding: 10vw;
 }
 
 .dockerContainer {
     flex: 0 0;
-    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
     border-radius: 10px;
     border: 3px solid #4697ec;
     display: flex;
     flex-direction: column;
     padding: 20px;
     align-items: center;
+    cursor: pointer;
     h3 {
         color: #9cd4f7;
+        word-break: break-all;
     }
 }
 
 .sidebar {
     background-color: #0f1c24;
     height: 100vh;
-    min-width: 500px;
+    max-width: 100vw;
+    min-width: min(500px, 100vw);
     flex-grow: 0.5;
     align-self: flex-end;
     color: #d3d4d4;
@@ -47,9 +51,11 @@
         border: none;
         padding: 5px;
         color: inherit;
+        cursor: pointer;
     }
     h1 {
         color: #9cd4f7;
+        word-break: break-all;
     }
 }
 
