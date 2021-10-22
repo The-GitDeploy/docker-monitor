@@ -8,8 +8,8 @@ export function SyncStateProvider(props) {
   const [syncState, setSyncState] = useState({})
 
   useEffect(() => {
-    SyncedClient(process.env.NODE_ENV === "development" ? process.env.REACT_APP_BACKEND : "/state", (state) => {
-      setSyncState({ ...state })
+    SyncedClient((process.env.NODE_ENV === "development" ? process.env.REACT_APP_BACKEND : "")+"/state", (state) => {
+      setSyncState(JSON.parse(JSON.stringify(state)))
     })
   }, [])
 

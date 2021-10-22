@@ -1,0 +1,30 @@
+.code {
+    font-family: monospace;
+    background-color: #0a121b;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: #c1f1f0;
+    width: 100%;
+    height: 20rem;
+    resize: vertical;
+    padding: 10px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #c1f1f03a;
+        border-radius: 5px;
+        
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        border-radius: 5px;
+        background: #c1f1f0;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-resizer {
+        background-color: #4697ec;
+    }
+}
