@@ -91,14 +91,6 @@ app.get("/delete/:container", (req, res) => {
       res.status(200).send({ message: "Successfully deleted container.\n" + data.toString(), error: false })
   })
 })
-app.get("/start/:container", (req, res) => {
-  docker.getContainer(req.params.container).start((err, data) => {
-    if (err)
-      res.status(200).send({ message: "Error, while starting container.\n" + err.message, error: true })
-    else
-      res.status(200).send({ message: "Successfully started container.\n" + data.toString(), error: false })
-  })
-})
 
 app.listen(8080, "0.0.0.0", () => {
   console.log("Listening under 0.0.0.0:8080");

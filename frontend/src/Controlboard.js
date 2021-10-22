@@ -33,13 +33,6 @@ export const Controlboard = ({ containerId, onActionComplete }) => {
 
   const [buttons, setButtons] = useState([
     {
-      icon: "play_arrow",
-      labelIdle: "Start",
-      labelProcessing: "Starting",
-      action: "start",
-      processing: false
-    },
-    {
       icon: "autorenew",
       labelIdle: "Restart",
       labelProcessing: "Restarting",
