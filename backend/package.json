@@ -2,7 +2,8 @@
   "name": "backend",
   "private": true,
   "scripts": {
-    "start": "nodemon index.js"
+    "dev": "NODE_ENV=development nodemon index.js",
+    "start": "node index.js"
   },
   "dependencies": {
     "dockerode": "^3.3.1",

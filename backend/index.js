@@ -7,7 +7,11 @@ app.use("/", express.static("built_frontend"))
 const { SyncedServer } = require('express-sync-state');
 const state = { containers: [] }
 
-app.get("/state", SyncedServer(state))
+app.get("/state", (req, res, next) => {
+  if (process.env.NODE_ENV === "development")
+    res.header("Access-Control-Allow-Origin", "*");
+  next()
+}, SyncedServer(state))
 
 const docker = new Dockerode();
 

@@ -1,31 +1,66 @@
 .background {
-    background-color: #081f30;
+    background-color: #031f30;
     width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    color: #d3d4d4;
 }
 
 .listContainer {
-    max-width: 90vw;
+    flex-grow: 1;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 20px
+    gap: 20px;
+    padding: 10vw;
 }
 
 .dockerContainer {
     flex: 0 0;
     width: 200px;
-    height: 100px;
     border-radius: 10px;
     border: 3px solid #4697ec;
     display: flex;
     flex-direction: column;
-    color: white;
     padding: 20px;
     align-items: center;
+    h3 {
+        color: #9cd4f7;
+    }
+}
+
+.sidebar {
+    background-color: #0f1c24;
+    height: 100vh;
+    min-width: 500px;
+    flex-grow: 0.5;
+    align-self: flex-end;
+    color: #d3d4d4;
+    padding: 20px;
+    button {
+        font-size: larger;
+        background-color: #0f1c24;
+        border: none;
+        padding: 5px;
+        color: inherit;
+    }
+    h1 {
+        color: #9cd4f7;
+    }
+}
+
+.code {
+    font-family: monospace;
+    background-color: #0a121b;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: #c1f1f0;
+    width: 100%;
+    height: 20rem;
+    resize: vertical;
+    padding: 10px;
 }
