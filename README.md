@@ -1,7 +1,8 @@
 # docker-monitor
-Simple web-interface to view all running docker container
+View and manage all running Docker container from a simple web-interface.
 
-Run with: 
+Simply run the following command: 
 ```
-docker run -p8080:8080 -v /var/run/docker.sock:/var/run/docker.sock dockermonitor
+docker run -p8080:8080 -v /var/run/docker.sock:/var/run/docker.sock f1nnm/dockermonitor
 ```
+The UI will then be available under https://localhost:8080
