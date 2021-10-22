@@ -5,6 +5,12 @@ import styles from "./Sidebar.module.scss"
 
 export const Sidebar = ({ selectedContainer, onClose }) => {
   const [log, setLog] = useState("")
+  const [logValidId, setLogValidId] = useState(0)
+
+  const invalidateLog = () =>{
+    setLogValidId(logValidId => logValidId+1)
+  }
+
   useEffect(() => {
     let xhr = new XMLHttpRequest()
     let cancelled = false
@@ -22,7 +28,7 @@ export const Sidebar = ({ selectedContainer, onClose }) => {
       xhr.abort()
       setLog("")
     }
-  }, [selectedContainer])
+  }, [selectedContainer.Id, logValidId])
 
   const [showDetails, setShowDetails] = useState(false)
 
@@ -34,7 +40,7 @@ export const Sidebar = ({ selectedContainer, onClose }) => {
         <h2>{selectedContainer.Names.map((name, index) => index > 1 ? name : '')} </h2>
       )}
       <label className={styles.status}>Status: {selectedContainer.State}. {selectedContainer.Status}.</label>
-      <Controlboard containerId={selectedContainer.Id} />
+      <Controlboard containerId={selectedContainer.Id} onActionComplete={invalidateLog}/>
       <label>Image:</label>
       <Code value={selectedContainer.Image} oneLine />
       <label>Id:</label>

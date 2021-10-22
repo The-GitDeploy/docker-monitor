@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Button } from "./Button"
 import styles from "./Controlboard.module.scss"
 
-export const Controlboard = ({ containerId }) => {
+export const Controlboard = ({ containerId, onActionComplete }) => {
 
   const actionHandler = (action, index) => {
     setButtons(buttons => {
@@ -18,16 +18,27 @@ export const Controlboard = ({ containerId }) => {
         return response.json()
       })
       .then(response => {
-        console.log(response)
         setButtons(buttons => {
           const newButtons = [...buttons]
           newButtons[index] = { ...newButtons[index], processing: false }
           return newButtons
         })
+
+        if (response.error)
+          alert(response.message)
+        else
+          onActionComplete()
       })
   }
 
   const [buttons, setButtons] = useState([
+    {
+      icon: "play_arrow",
+      labelIdle: "Start",
+      labelProcessing: "Starting",
+      action: "start",
+      processing: false
+    },
     {
       icon: "autorenew",
       labelIdle: "Restart",
@@ -40,6 +51,13 @@ export const Controlboard = ({ containerId }) => {
       labelIdle: "Stop",
       labelProcessing: "Stopping",
       action: "stop",
+      processing: false
+    },
+    {
+      icon: "delete_forever",
+      labelIdle: "Delete",
+      labelProcessing: "Deleting",
+      action: "delete",
       processing: false
     }
   ])

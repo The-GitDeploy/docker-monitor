@@ -5,7 +5,7 @@ const { SyncedServer } = require('express-sync-state');
 var state = { composed: {}, other: [], all: {} }
 const docker = new Dockerode();
 setInterval(() => {
-  docker.listContainers((err, list) => {
+  docker.listContainers({all: true}, (err, list) => {
     if (err)
       console.log(err)
     let newComposed = {}
@@ -52,6 +52,10 @@ app.get("/log/:container", (req, res) => {
   res.write("\n")
 
   container.logs({ follow: true, stdout: true, stderr: true, tail: "10000" }, function (err, stream) {
+    if(err){
+      res.end()
+      return
+    }
     savedStream = stream
     stream.pipe(res)
   });
@@ -66,7 +70,7 @@ app.get("/log/:container", (req, res) => {
 app.get("/stop/:container", (req, res) => {
   docker.getContainer(req.params.container).stop({ t: 10 }, (err, data) => {
     if (err)
-      res.status(500).send({ message: "Error, while stopping container.\n" + data.toString(), error: true })
+      res.status(200).send({ message: "Error, while stopping container.\n" + err.message, error: true })
     else
       res.status(200).send({ message: "Successfully stopped container.\n" + data.toString(), error: false })
   })
@@ -74,9 +78,25 @@ app.get("/stop/:container", (req, res) => {
 app.get("/restart/:container", (req, res) => {
   docker.getContainer(req.params.container).restart({ t: 10 }, (err, data) => {
     if (err)
-      res.status(500).send({ message: "Error, while restarting container.\n" + data.toString(), error: true })
+      res.status(200).send({ message: "Error, while restarting container.\n" + err.message, error: true })
     else
       res.status(200).send({ message: "Successfully restarted container.\n" + data.toString(), error: false })
+  })
+})
+app.get("/delete/:container", (req, res) => {
+  docker.getContainer(req.params.container).remove({ v: true, force: true}, (err, data) => {
+    if (err)
+      res.status(200).send({ message: "Error, while deleting container.\n" + err.message, error: true })
+    else
+      res.status(200).send({ message: "Successfully deleted container.\n" + data.toString(), error: false })
+  })
+})
+app.get("/start/:container", (req, res) => {
+  docker.getContainer(req.params.container).start((err, data) => {
+    if (err)
+      res.status(200).send({ message: "Error, while starting container.\n" + err.message, error: true })
+    else
+      res.status(200).send({ message: "Successfully started container.\n" + data.toString(), error: false })
   })
 })
 
