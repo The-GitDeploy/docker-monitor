@@ -10,7 +10,7 @@ export const Code = ({ value, scrollToBottom }) => {
   useEffect(() => {
     if (scrollToBottom && scrollOnUpdate && textRef && textRef.current)
       textRef.current.scrollTop = textRef.current.scrollHeight
-  }, [value, textRef])
+  }, [value, textRef, scrollToBottom, scrollOnUpdate])
 
   const onScroll = (e) => {
     if (e.target.scrollTop+e.target.offsetHeight > e.target.scrollHeight-20)

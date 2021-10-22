@@ -1,0 +1,15 @@
+body, html {
+    padding: 0;
+    margin: 0;
+}
+* {
+    box-sizing: border-box;
+}
+body{
+    --background-light: #031f30;
+    --background-dark: #0f1c24;
+    --text: #d3d4d4;
+    --accent-blue: #4697ec;
+    --accent-text: #9cd4f7;
+    --icon-font: 'Material Icons', serif;
+}

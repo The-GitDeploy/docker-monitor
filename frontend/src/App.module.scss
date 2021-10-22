@@ -1,12 +1,12 @@
 .background {
-    background-color: #031f30;
+    background-color: var(--background-light);
     width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    color: #d3d4d4;
+    color: var(--text);
 }
 
 .listContainer {
@@ -25,7 +25,7 @@
     max-width: 200px;
     height: 170px;
     border-radius: 10px;
-    border: 3px solid #4697ec;
+    border: 3px solid var(--accent-blue);
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -35,7 +35,7 @@
     cursor: pointer;
     justify-content: space-between;
     h3 {
-        color: #9cd4f7;
+        color: var(--accent-text);
         word-break: break-all;
     }
     div {
@@ -46,24 +46,23 @@
 }
 
 .sidebar {
-    background-color: #0f1c24;
+    background-color: var(--background-dark);
     height: 100vh;
     max-width: 100vw;
     min-width: min(500px, 100vw);
     flex: 0.8 0 0;
     align-self: flex-end;
-    color: #d3d4d4;
     padding: 20px;
     button {
         font-size: larger;
-        background-color: #0f1c24;
+        background-color: var(--background-dark);
         border: none;
         padding: 5px;
         color: inherit;
         cursor: pointer;
     }
     h1 {
-        color: #9cd4f7;
+        color: var(--accent-text);
         word-break: break-all;
     }
 }

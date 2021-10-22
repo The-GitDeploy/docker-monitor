@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styles from './App.module.scss';
 import { Code } from './Code';
+import { Controlboard } from './Controlboard';
 import { SyncStateContext } from './SyncState';
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
 
       let xhr = new XMLHttpRequest();
       let cancelled = false;
-      xhr.open("GET", (process.env.NODE_ENV === "development" ? process.env.REACT_APP_BACKEND : "") + "/log/" + selectedContainerId);
+      xhr.open("GET",(process.env.NODE_ENV === "development" ? process.env.REACT_APP_BACKEND : "") + "/log/" + selectedContainerId);
 
       xhr.onprogress = event => {
         if (!cancelled)
@@ -56,6 +57,7 @@ function App() {
           {selectedContainer.Names.length > 0 && (
             <h2>{selectedContainer.Names.map((name, index) => index > 1 ? name : '')} </h2>
           )}
+          <Controlboard containerId={selectedContainerId}/>
           <Code value={JSON.stringify(selectedContainer, null, 2)} />
           <h1>Log:</h1>
           <Code value={log} scrollToBottom/>

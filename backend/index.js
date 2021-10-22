@@ -27,7 +27,7 @@ app.get("/log/:container", (req, res) => {
 
   const container = docker.getContainer(req.params.container)
 
-  if(!container)
+  if (!container)
     res.status(400).end()
 
   res.header('Cache-Control', 'no-cache')
@@ -36,19 +36,34 @@ app.get("/log/:container", (req, res) => {
 
   res.write("\n")
 
-  container.logs({follow: true, stdout: true, stderr: true, tail: "10000"}, function (err, stream) {
+  container.logs({ follow: true, stdout: true, stderr: true, tail: "10000" }, function (err, stream) {
     savedStream = stream
     stream.pipe(res)
   });
 
   res.socket.on('end', function () {
-    if(savedStream && !savedStream.destroyed)
+    if (savedStream && !savedStream.destroyed)
       savedStream.destroy()
   })
 
 })
 
-
+app.get("/stop/:container", (req, res) => {
+  docker.getContainer(req.params.container).stop({ t: 10 }, (err, data) => {
+    if (err)
+      res.status(500).send({message: "Error, while stopping container.\n"+data.toString(), error: true})
+    else
+      res.status(200).send({message: "Successfully stopped container.\n"+data.toString(), error: false})
+  })
+})
+app.get("/restart/:container", (req, res) => {
+  docker.getContainer(req.params.container).restart({ t: 10 }, (err, data) => {
+    if (err)
+      res.status(500).send({message: "Error, while restarting container.\n"+data.toString(), error: true})
+    else
+      res.status(200).send({message: "Successfully restarted container.\n"+data.toString(), error: false})
+  })
+})
 
 app.listen(8080, "0.0.0.0", () => {
   console.log("Listening under 0.0.0.0:8080");
