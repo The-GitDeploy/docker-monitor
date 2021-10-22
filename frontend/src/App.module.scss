@@ -15,7 +15,18 @@
     overflow-y: auto;
     overflow-x: hidden;
     align-items: flex-start;
+    justify-content: center;
     min-width: 0;
     flex: 1 1 0;
-    max-height: 100vh;
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+.version {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    word-break: keep-all;
 }

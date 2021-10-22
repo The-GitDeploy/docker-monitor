@@ -1,10 +1,26 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './App.module.scss';
 import { ContainerGroup } from './ContainerGroup';
 import { Sidebar } from './Sidebar';
 import { SyncStateContext } from './SyncState';
 
 function App() {
+
+  const [version, setVersion] = useState(null)
+
+  useEffect(() => {
+    fetch((process.env.NODE_ENV === "development" ? process.env.REACT_APP_BACKEND : "") + "/version")
+      .then((response) => {
+        if (!response.ok)
+          throw new Error("Failed API call!")
+        return response.json()
+      }).then((response) => {
+        if (response.error)
+          throw new Error("Failed API call serverside!")
+        setVersion(response)
+        console.log(response)
+      })
+  }, [])
 
   const syncState = useContext(SyncStateContext)
 
@@ -32,6 +48,11 @@ function App() {
       {selectedContainer && (
         <Sidebar selectedContainer={selectedContainer} onClose={() => setSelectedContainerId(null)} />
       )}
+      {version &&
+          <div className={styles.version}>
+            {version.Os} | {version.Platform.Name} | {version.Version}
+          </div>
+        }
     </div>
   );
 }

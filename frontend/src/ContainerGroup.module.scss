@@ -1,11 +1,15 @@
 .wrapper {
   margin-left: 50px;
   margin-right: 50px;
+  margin-top: 20px;
   &:first-of-type {
-    margin-top: 50px
+    margin-top: 50px;
   }
   &:last-of-type {
-    margin-bottom: 50px
+    margin-bottom: 50px;
+  }
+  h2 {
+    margin-top: 0;
   }
 }
 .listContainer {
@@ -25,6 +29,7 @@
   height: 170px;
   border-radius: 10px;
   border: 3px solid var(--accent-blue);
+  background-color: var(--background);
   display: flex;
   flex-direction: column;
   padding: 20px;

@@ -1,7 +1,7 @@
 import { SyncedClient } from "express-sync-state"
 import React, { useEffect, useState } from "react"
 
-export const SyncStateContext = React.createContext({ containers: [] })
+export const SyncStateContext = React.createContext({composed: {}, other: [], all:{}})
 
 export function SyncStateProvider(props) {
 

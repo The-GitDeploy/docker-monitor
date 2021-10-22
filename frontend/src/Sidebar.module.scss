@@ -7,6 +7,7 @@
   align-self: flex-end;
   padding: 20px;
   overflow: auto;
+  z-index: 1;
   button {
       font-size: larger;
       background-color: var(--background-dark);

@@ -92,6 +92,15 @@ app.get("/delete/:container", (req, res) => {
   })
 })
 
+app.get("/version", (req, res) => {
+  docker.version((err, data) => {
+    if (err)
+      res.status(200).send({ error: true })
+    else
+      res.status(200).send({...data, error: false})
+  })
+})
+
 app.listen(8080, "0.0.0.0", () => {
   console.log("Listening under 0.0.0.0:8080");
 })
