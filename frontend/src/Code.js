@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Code.module.scss"
 
-export const Code = ({ value, scrollToBottom }) => {
+export const Code = ({ value, scrollToBottom, oneLine }) => {
 
   const [scrollOnUpdate, setScrollOnUpdate] = useState(scrollToBottom);
 
@@ -19,5 +19,5 @@ export const Code = ({ value, scrollToBottom }) => {
       setScrollOnUpdate(false)
   }
 
-  return <textarea ref={textRef} disabled value={value} className={styles.code} onScroll={onScroll} />
+  return <textarea ref={textRef} disabled value={value} className={styles.code+" "+(oneLine?styles.oneLine:"")} rows={(oneLine?1:20)} onScroll={onScroll} />
 }

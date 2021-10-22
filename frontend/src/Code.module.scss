@@ -5,12 +5,12 @@
     border-radius: 10px;
     color: #c1f1f0;
     width: 100%;
-    height: 20rem;
     resize: vertical;
     padding: 10px;
-    overflow-y: scroll;
+    overflow-y: auto;
     &::-webkit-scrollbar {
         width: 8px;
+        height: 8px;
     }
     &::-webkit-scrollbar-thumb {
         background: #c1f1f03a;
@@ -27,4 +27,11 @@
     &::-webkit-resizer {
         background-color: #4697ec;
     }
+}
+.oneLine {
+    resize: none;
+    overflow-y: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+    word-break: keep-all;
 }
