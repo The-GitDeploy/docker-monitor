@@ -1,3 +1,13 @@
+.wrapper {
+  margin-left: 50px;
+  margin-right: 50px;
+  &:first-of-type {
+    margin-top: 50px
+  }
+  &:last-of-type {
+    margin-bottom: 50px
+  }
+}
 .listContainer {
   min-width: 0;
   flex: 1 1 0;
