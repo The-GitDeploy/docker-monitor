@@ -46,6 +46,7 @@ app.get("/log/:container", (req, res) => {
     res.status(400).end()
 
   res.header('Cache-Control', 'no-cache')
+  res.header('X-Accel-Buffering', 'no')
 
   var savedStream
 
