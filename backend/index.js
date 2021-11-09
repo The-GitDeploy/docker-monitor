@@ -95,7 +95,7 @@ app.get("/delete/:container", (req, res) => {
       res.status(200).send({ message: "Successfully deleted container.\n" + data.toString(), error: false })
   })
 })
-app.get("/execute/:container/:command(.*)", (req, res) => {
+app.get("/execute/:container/:command(*)", (req, res) => {
   const container = docker.getContainer(req.params.container)
 
   if (!container){
