@@ -6,7 +6,8 @@ WORKDIR /app
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
-RUN apk add --update python make g++\
+RUN apk update
+RUN apk add --update python3 make g++\
    && rm -rf /var/cache/apk/*
 
 # install app dependencies

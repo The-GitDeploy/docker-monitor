@@ -42,8 +42,10 @@ app.get("/log/:container", (req, res) => {
 
   const container = docker.getContainer(req.params.container)
 
-  if (!container)
+  if (!container){
     res.status(400).end()
+    return
+  }
 
   res.header('Cache-Control', 'no-cache')
   res.header('X-Accel-Buffering', 'no')
@@ -54,6 +56,7 @@ app.get("/log/:container", (req, res) => {
 
   container.logs({ follow: true, stdout: true, stderr: true, tail: "10000" }, function (err, stream) {
     if(err){
+      res.write(""+err)
       res.end()
       return
     }
@@ -90,6 +93,43 @@ app.get("/delete/:container", (req, res) => {
       res.status(200).send({ message: "Error, while deleting container.\n" + err.message, error: true })
     else
       res.status(200).send({ message: "Successfully deleted container.\n" + data.toString(), error: false })
+  })
+})
+app.get("/execute/:container/:command", (req, res) => {
+  const container = docker.getContainer(req.params.container)
+
+  if (!container){
+    res.status(400).end()
+    return
+  }
+
+  res.header('Cache-Control', 'no-cache')
+  res.header('X-Accel-Buffering', 'no')
+
+  var savedStream
+
+  res.write("\n")
+
+  container.exec({ AttachStdout: true, Cmd: req.params.command.split(" "), privileged: true }, function (err, exec) {
+    if(err){
+      res.write(""+err)
+      res.end()
+      return
+    }
+    exec.start({}, function(err, stream) {
+      if(err){
+        res.write(""+err)
+        res.end()
+        return
+      }
+      savedStream = stream
+      stream.pipe(res)
+    });
+  });
+
+  res.socket.on('end', function () {
+    if (savedStream && !savedStream.destroyed)
+      savedStream.destroy()
   })
 })
 
